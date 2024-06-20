@@ -19,6 +19,14 @@ closeModalButtons.forEach((button) => {
     })
 })
 
+overlay.addEventListener('click', () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach((modal) => {
+        modal.classList.remove('active');
+    })
+    overlay.classList.remove('active');
+})
+
 function openModal(modal) {
     if(modal != null){
         modal.classList.add('active');
