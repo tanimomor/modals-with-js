@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Modern Modals Using Dialog</title>
+    <style>
+        .modal {
+            border: solid 1px black;
+            border-radius: 5px;
+            padding: 6rem;
+        }
+        
+        dialog::backdrop {
+            background-color: hsl(200, 100%, 50%, 0.5);
+        }
+    </style>
+</head>
+<body>
+<button data-open-modal>Open</button>
+
+<!--Close is automatically on focus. Can use esc to close modal as well.-->
+<dialog data-modal class="modal">
+    <div>This is modal</div>
+    <form action="">
+        <input type="text"/>
+        <button type="submit" formmethod="dialog">Cancel</button>
+        <button type="submit">Submit</button>
+    </form>
+</dialog>
+
+<!--Opened as a dialog. Equivalent to show()-->
+<dialog class="modal" open>
+    <div>This is opened as dialog</div>
+</dialog>
+
+<script>
+    const modal = document.querySelector('[data-modal]')
+    const openButton = document.querySelector('[data-open-modal]')
+    
+    openButton.addEventListener('click', () => {
+        modal.showModal();
+    })
+    
+    modal.addEventListener("click", e => {
+        const dialogDimensions = modal.getBoundingClientRect()
+        if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+        ) {
+            modal.close();
+        }
+    })
+</script>
+</body>
+</html>
